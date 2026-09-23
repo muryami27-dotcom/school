@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div id="menu" class="screen">
+    <h1 class="chto-eta">Вітаю! На цьому сайті ви побачите картки персонажів, яких ми будемо вивчати у дев'ятому класі, по українській та зарубіжній літературі!</h1>
+    <h2 class="opisatsa">З часом буде додаватися все більше інформації та карток</h2>
+    <h5 class="vladeltsa">Сайт зроблено А. Гришиною</h5>
+    <button class="foreign" onclick="showScreen('zarub')">Зарубіжна література</button>
+    <button class="ukranian" onclick="showScreen('ukr-lit')">Українська література</button>
+</div>
+
+<div id="zarub" class="screen hidden">
+
+    <button class="arrow left" onclick="previousSlide()">←</button>
+
+    <div class="slide">
+        <h1 id="slideTitle">Гуллівер</h1>
+
+        <img id="slideImage" class="slideImage"
+             src="photo/ChatGPT Image 22 сент. 2026 г., 17_18_11.png">
+
+        <p id="slideText">
+            Зоображення зроблено ChatGPT.
+        </p>
+    </div>
+
+    <button class="arrow right" onclick="nextSlide()">→</button>
+
+    <button class="domoi" onclick="showScreen('menu')">
+        Повернутися на головну сторінку
+    </button>
+
+</div>
+
+<div id="ukr-lit" class="screen hidden">
+    <h2 class="ne">Поки тут нічого немає!</h2>
+    <button class="damoi" onclick="showScreen('menu')">Повернутися на головну сторінку</button>
+</div>
+
+<script>
+    let clickCount = 0;
+
+    function showScreen(screenId) {
+        clickCount = 0;
+        console.log("Счётчик обнулен для экрана " + screenId);
+
+        const allScreens = document.querySelectorAll('.screen');
+
+        allScreens.forEach(screen => {
+            screen.classList.add('hidden');
+        });
+
+        const targetScreen = document.getElementById(screenId);
+
+        if (targetScreen) {
+            targetScreen.classList.remove('hidden');
+        }
+    }
+
+
+    // Все слайды
+    const slides = [
+        {
+            title: "Гуллівер",
+            image: "photo/ChatGPT Image 22 сент. 2026 г., 17_18_11.png",
+            text: "Зображення зроблено ChatGPT."
+        },
+
+        {
+            title: "Подорож до Ліліпутії",
+            image: "photo/liliputik.jpg",
+            text: "Зображення зроблено Gemini."
+        },
+
+        {
+            title: "Ліліпути",
+            image: "photo/liliputy.jpg",
+            text: "Зображення зроблено Gemini."
+        }
+    ];
+
+
+    // Номер поточного слайда
+    let currentSlide = 0;
+
+    // Таймер для анімації
+    let slideTimeout;
+
+
+    // Оновлення слайда
+    function updateSlide() {
+
+        const title = document.getElementById("slideTitle");
+        const image = document.getElementById("slideImage");
+        const text = document.getElementById("slideText");
+
+        // Якщо елементи не знайдені — зупиняємо функцію
+        if (!title || !image || !text) {
+            console.error("Не знайдено елемент слайдера!");
+            return;
+        }
+
+        // Скасовуємо попередню анімацію
+        clearTimeout(slideTimeout);
+
+        // Починаємо плавне зникнення
+        title.classList.add("fade");
+        image.classList.add("fade");
+        text.classList.add("fade");
+
+
+        slideTimeout = setTimeout(() => {
+
+            // Міняємо інформацію
+            title.textContent = slides[currentSlide].title;
+            image.src = slides[currentSlide].image;
+            text.textContent = slides[currentSlide].text;
+
+            // Повертаємо елементи
+            title.classList.remove("fade");
+            image.classList.remove("fade");
+            text.classList.remove("fade");
+
+        }, 300);
+    }
+
+
+    // Наступний слайд →
+    function nextSlide() {
+
+        currentSlide++;
+
+        // Якщо дійшли до кінця — повертаємося на перший
+        if (currentSlide >= slides.length) {
+            currentSlide = 0;
+        }
+
+        updateSlide();
+    }
+
+
+    // Попередній слайд ←
+    function previousSlide() {
+
+        currentSlide--;
+
+        // Якщо пішли перед перший — переходимо на останній
+        if (currentSlide < 0) {
+            currentSlide = slides.length - 1;
+        }
+
+        updateSlide();
+    }
+
+
+    // Показуємо перший слайд при запуску
+    updateSlide();
+
+</script>
+
+</body>
+</html>
