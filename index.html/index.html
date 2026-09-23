@@ -64,7 +64,6 @@
     }
 
 
-    // Все слайды
     const slides = [
         {
             title: "Гуллівер",
@@ -86,30 +85,24 @@
     ];
 
 
-    // Номер поточного слайда
     let currentSlide = 0;
 
-    // Таймер для анімації
     let slideTimeout;
 
 
-    // Оновлення слайда
     function updateSlide() {
 
         const title = document.getElementById("slideTitle");
         const image = document.getElementById("slideImage");
         const text = document.getElementById("slideText");
 
-        // Якщо елементи не знайдені — зупиняємо функцію
         if (!title || !image || !text) {
             console.error("Не знайдено елемент слайдера!");
             return;
         }
 
-        // Скасовуємо попередню анімацію
         clearTimeout(slideTimeout);
 
-        // Починаємо плавне зникнення
         title.classList.add("fade");
         image.classList.add("fade");
         text.classList.add("fade");
@@ -117,12 +110,10 @@
 
         slideTimeout = setTimeout(() => {
 
-            // Міняємо інформацію
             title.textContent = slides[currentSlide].title;
             image.src = slides[currentSlide].image;
             text.textContent = slides[currentSlide].text;
 
-            // Повертаємо елементи
             title.classList.remove("fade");
             image.classList.remove("fade");
             text.classList.remove("fade");
@@ -131,12 +122,10 @@
     }
 
 
-    // Наступний слайд →
     function nextSlide() {
 
         currentSlide++;
 
-        // Якщо дійшли до кінця — повертаємося на перший
         if (currentSlide >= slides.length) {
             currentSlide = 0;
         }
@@ -145,12 +134,10 @@
     }
 
 
-    // Попередній слайд ←
     function previousSlide() {
 
         currentSlide--;
 
-        // Якщо пішли перед перший — переходимо на останній
         if (currentSlide < 0) {
             currentSlide = slides.length - 1;
         }
@@ -159,7 +146,6 @@
     }
 
 
-    // Показуємо перший слайд при запуску
     updateSlide();
 
 </script>
